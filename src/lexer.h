@@ -51,5 +51,6 @@ public:
   Token NextToken();
 private:
   Token ReadIdentifier();
+  void SkipWhiteSpace();
 };
 } // namespace monkey

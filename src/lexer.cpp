@@ -25,6 +25,9 @@ const std::unordered_map<std::string_view, std::string_view> lookup = {
 };
 
 Token Lexer::NextToken() {
+
+  SkipWhiteSpace();
+
   if (_it == _input.end()) {
     return Eof;
   }
@@ -59,8 +62,7 @@ Token Lexer::NextToken() {
     if (isLetter(*_it)) {
       auto id = ReadIdentifier();
       auto found = lookup.find(id.value);
-      if(found!=lookup.end())
-      {
+      if (found != lookup.end()) {
         id.type = found->second;
       }
       return id;
@@ -80,6 +82,21 @@ Token Lexer::ReadIdentifier() {
   }
   std::string_view value(position, _it);
   return Ident(value);
+}
+
+void Lexer::SkipWhiteSpace() {
+
+  for (; _it != _input.end(); ++_it) {
+    switch (*_it) {
+    case ' ':
+    case '\t':
+    case '\n':
+    case '\r':
+      break;
+    default:
+      return;
+    }
+  }
 }
 
 } // namespace monkey
