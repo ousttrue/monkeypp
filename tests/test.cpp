@@ -70,3 +70,14 @@ let result = add(five, ten);
   REQUIRE(monkey::Semicolon == l.NextToken());
   REQUIRE(monkey::Eof == l.NextToken());
 }
+
+TEST_CASE("other", "[monkey::Lexer]") {
+  auto input = R"(
+!-/*5;
+5 < 10 > 5;
+  )";
+
+  monkey::Lexer l(input);
+
+  REQUIRE(monkey::Eof == l.NextToken());
+}
