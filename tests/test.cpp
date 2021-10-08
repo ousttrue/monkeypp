@@ -27,7 +27,7 @@ let add = fn(x, y) {
   x + y;
 };
 
-let result = add(file, ten);
+let result = add(five, ten);
 )";
 
   monkey::Lexer l(input);
@@ -46,6 +46,7 @@ let result = add(file, ten);
   REQUIRE(monkey::Ident("add") == l.NextToken());
   REQUIRE(monkey::Assign == l.NextToken());
   REQUIRE(monkey::Function == l.NextToken());
+  REQUIRE(monkey::LParen == l.NextToken());
   REQUIRE(monkey::Ident("x") == l.NextToken());
   REQUIRE(monkey::Comma == l.NextToken());
   REQUIRE(monkey::Ident("y") == l.NextToken());

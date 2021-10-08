@@ -15,6 +15,13 @@ static bool isLetter(char c) {
   return false;
 }
 
+static bool isDigit(char c) {
+  if ('0' <= c && c <= '9') {
+    return true;
+  }
+  return false;
+}
+
 namespace monkey {
 
 Lexer::Lexer(std::string_view input) : _input(input) { _it = input.begin(); }
@@ -32,7 +39,8 @@ Token Lexer::NextToken() {
     return Eof;
   }
 
-  switch (*_it) {
+  auto c = *_it;
+  switch (c) {
   case '=':
     ++_it;
     return Assign;
@@ -59,13 +67,16 @@ Token Lexer::NextToken() {
     return RBrace;
 
   default: {
-    if (isLetter(*_it)) {
-      auto id = ReadIdentifier();
-      auto found = lookup.find(id.value);
+    if (isLetter(c)) {
+      auto t = ReadIdentifier();
+      auto found = lookup.find(t.value);
       if (found != lookup.end()) {
-        id.type = found->second;
+        t.type = found->second;
       }
-      return id;
+      return t;
+    } else if (isDigit(c)) {
+      auto t = ReadInt();
+      return t;
     } else {
       return Illegal;
     }
@@ -74,14 +85,13 @@ Token Lexer::NextToken() {
 }
 
 Token Lexer::ReadIdentifier() {
-  auto position = _it;
+  auto begin = _it;
   for (; _it != _input.end(); ++_it) {
     if (!isLetter(*_it)) {
       break;
     }
   }
-  std::string_view value(position, _it);
-  return Ident(value);
+  return Ident({begin, _it});
 }
 
 void Lexer::SkipWhiteSpace() {
@@ -97,6 +107,16 @@ void Lexer::SkipWhiteSpace() {
       return;
     }
   }
+}
+
+Token Lexer::ReadInt() {
+  auto begin = _it;
+  for (; _it != _input.end(); ++_it) {
+    if (!isDigit(*_it)) {
+      break;
+    }
+  }
+  return Int({begin, _it});
 }
 
 } // namespace monkey
