@@ -31,9 +31,10 @@ constexpr Token Eof = {constants::_EOF};
 
 class Lexer {
   std::string_view _input;
+  std::string_view::iterator _it;
 
 public:
-  Lexer(std::string_view input) : _input(input) {}
-  Token NextToken() { return {}; }
+  Lexer(std::string_view input);
+  Token NextToken();
 };
 } // namespace monkey
