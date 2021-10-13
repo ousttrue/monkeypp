@@ -29,7 +29,10 @@ struct Token {
 };
 
 inline std::ostream &operator<<(std::ostream &os, const Token &t) {
-  os << t.type << ": " << t.value;
+  os << t.type;
+  if (!t.value.empty()) {
+    os << ": " << t.value;
+  }
   return os;
 }
 
