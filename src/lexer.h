@@ -6,7 +6,7 @@
 namespace monkey {
 
 struct Token {
-  std::string_view type;
+  TokenTypes type;
   std::string_view value;
 
   bool operator==(const Token &rhs) const {
@@ -26,21 +26,21 @@ inline std::ostream &operator<<(std::ostream &os, const Token &t)
   return os;
 }
 
-constexpr Token Assign = {constants::ASSIGN, "="};
-constexpr Token Plus = {constants::PLUS, "+"};
-constexpr Token LParen = {constants::LPAREN, "("};
-constexpr Token RParen = {constants::RPAREN, ")"};
-constexpr Token LBrace = {constants::LBRACE, "{"};
-constexpr Token RBrace = {constants::RBRACE, "}"};
-constexpr Token Comma = {constants::COMMA, ","};
-constexpr Token Semicolon = {constants::SEMICOLON, ";"};
-constexpr Token Eof = {constants::_EOF};
-constexpr Token Illegal = {constants::ILLEGAL};
+constexpr Token Assign = {TokenTypes::ASSIGN, "="};
+constexpr Token Plus = {TokenTypes::PLUS, "+"};
+constexpr Token LParen = {TokenTypes::LPAREN, "("};
+constexpr Token RParen = {TokenTypes::RPAREN, ")"};
+constexpr Token LBrace = {TokenTypes::LBRACE, "{"};
+constexpr Token RBrace = {TokenTypes::RBRACE, "}"};
+constexpr Token Comma = {TokenTypes::COMMA, ","};
+constexpr Token Semicolon = {TokenTypes::SEMICOLON, ";"};
+constexpr Token Eof = {TokenTypes::_EOF};
+constexpr Token Illegal = {TokenTypes::ILLEGAL};
 
-constexpr Token Let = {constants::LET, "let"};
-inline Token Ident(std::string_view value) { return {constants::IDENT, value}; }
-inline Token Int(std::string_view value) { return {constants::INT, value}; }
-inline Token Function = {constants::FUNCTION, "fn"};
+constexpr Token Let = {TokenTypes::LET, "let"};
+inline Token Ident(std::string_view value) { return {TokenTypes::IDENT, value}; }
+inline Token Int(std::string_view value) { return {TokenTypes::INT, value}; }
+inline Token Function = {TokenTypes::FUNCTION, "fn"};
 
 class Lexer {
   std::string_view _input;

@@ -26,9 +26,9 @@ namespace monkey {
 
 Lexer::Lexer(std::string_view input) : _input(input) { _it = input.begin(); }
 
-const std::unordered_map<std::string_view, std::string_view> lookup = {
-    {"let", constants::LET},
-    {"fn", constants::FUNCTION},
+const std::unordered_map<std::string_view, TokenTypes> lookup = {
+    {"let", TokenTypes::LET},
+    {"fn", TokenTypes::FUNCTION},
 };
 
 Token Lexer::NextToken() {

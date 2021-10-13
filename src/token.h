@@ -1,19 +1,28 @@
-namespace monkey {
-namespace constants {
-constexpr auto ILLEGAL = "ILLEGAL";
-constexpr auto _EOF = "EOF";
-constexpr auto IDENT = "IDENT";
-constexpr auto INT = "INT";
-constexpr auto ASSIGN = "=";
-constexpr auto PLUS = "+";
-constexpr auto COMMA = ",";
-constexpr auto SEMICOLON = ";";
-constexpr auto LPAREN = "(";
-constexpr auto RPAREN = ")";
-constexpr auto LBRACE = "{";
-constexpr auto RBRACE = "}";
-constexpr auto FUNCTION = "FUNCTION";
-constexpr auto LET = "LET";
+#pragma once
+#include <ostream>
 
-} // namespace constants
+namespace monkey {
+
+enum class TokenTypes {
+  ILLEGAL,
+  _EOF,
+  IDENT,
+  INT,
+  ASSIGN,
+  PLUS,
+  COMMA,
+  SEMICOLON,
+  LPAREN,
+  RPAREN,
+  LBRACE,
+  RBRACE,
+  FUNCTION,
+  LET,
+};
+
+inline std::ostream &operator<<(std::ostream &os, TokenTypes t) {
+  os << (int)t;
+  return os;
+}
+
 } // namespace monkey
