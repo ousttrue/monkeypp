@@ -29,6 +29,11 @@ Lexer::Lexer(std::string_view input) : _input(input) { _it = input.begin(); }
 const std::unordered_map<std::string_view, TokenTypes> lookup = {
     {"let", TokenTypes::LET},
     {"fn", TokenTypes::FUNCTION},
+    {"if", TokenTypes::IF},
+    {"else", TokenTypes::ELSE},
+    {"return", TokenTypes::RETURN},
+    {"true", TokenTypes::_TRUE},
+    {"false", TokenTypes::_FALSE},
 };
 
 Token Lexer::NextToken() {
