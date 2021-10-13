@@ -36,20 +36,20 @@ Token Lexer::NextToken() {
   SkipWhiteSpace();
 
   if (_it == _input.end()) {
-    return {TokenTypes::_EOF};
+    return TokenTypes::_EOF;
   }
 
   auto c = *_it;
   switch (c) {
   case '=':
     ++_it;
-    return {TokenTypes::ASSIGN};
+    return TokenTypes::ASSIGN;
   case ';':
     ++_it;
-    return {TokenTypes::SEMICOLON};
+    return TokenTypes::SEMICOLON;
   case '(':
     ++_it;
-    return {TokenTypes::LPAREN};
+    return TokenTypes::LPAREN;
   case ')':
     ++_it;
     return {TokenTypes::RPAREN};
@@ -62,6 +62,21 @@ Token Lexer::NextToken() {
   case '-':
     ++_it;
     return {TokenTypes::MINUS};
+  case '!':
+    ++_it;
+    return {TokenTypes::BANG};
+  case '*':
+    ++_it;
+    return {TokenTypes::ASTERISK};
+  case '/':
+    ++_it;
+    return {TokenTypes::SLASH};
+  case '<':
+    ++_it;
+    return {TokenTypes::LT};
+  case '>':
+    ++_it;
+    return {TokenTypes::GT};
   case '{':
     ++_it;
     return {TokenTypes::LBRACE};
@@ -74,7 +89,7 @@ Token Lexer::NextToken() {
       auto t = ReadIdentifier();
       auto found = lookup.find(t.value);
       if (found != lookup.end()) {
-        t.type = found->second;
+        return found->second;
       }
       return t;
     } else if (isDigit(c)) {
@@ -94,7 +109,7 @@ Token Lexer::ReadIdentifier() {
       break;
     }
   }
-  return Ident({begin, _it});
+  return Token::Ident({begin, _it});
 }
 
 void Lexer::SkipWhiteSpace() {
@@ -119,7 +134,7 @@ Token Lexer::ReadInt() {
       break;
     }
   }
-  return Int({begin, _it});
+  return Token::Int({begin, _it});
 }
 
 } // namespace monkey

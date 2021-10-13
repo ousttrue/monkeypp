@@ -9,6 +9,14 @@ struct Token {
   TokenTypes type;
   std::string_view value;
 
+  Token(TokenTypes t, std::string_view v = {}) : type(t), value(v) {}
+  static Token Ident(std::string_view value) {
+    return {TokenTypes::IDENT, value};
+  }
+  static Token Int(std::string_view value) { return {TokenTypes::INT, value}; }
+
+  operator TokenTypes() const { return type; }
+
   bool operator==(const Token &rhs) const {
     if (type != rhs.type) {
       return false;
@@ -24,11 +32,6 @@ inline std::ostream &operator<<(std::ostream &os, const Token &t) {
   os << t.type << ": " << t.value;
   return os;
 }
-
-inline Token Ident(std::string_view value) {
-  return {TokenTypes::IDENT, value};
-}
-inline Token Int(std::string_view value) { return {TokenTypes::INT, value}; }
 
 class Lexer {
   std::string_view _input;
