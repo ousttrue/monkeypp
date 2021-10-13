@@ -45,5 +45,6 @@ private:
   Token ReadIdentifier();
   void SkipWhiteSpace();
   Token ReadInt();
+  char Peek() const;
 };
 } // namespace monkey

@@ -27,12 +27,9 @@ namespace monkey {
 Lexer::Lexer(std::string_view input) : _input(input) { _it = input.begin(); }
 
 const std::unordered_map<std::string_view, TokenTypes> lookup = {
-    {"let", TokenTypes::LET},
-    {"fn", TokenTypes::FUNCTION},
-    {"if", TokenTypes::IF},
-    {"else", TokenTypes::ELSE},
-    {"return", TokenTypes::RETURN},
-    {"true", TokenTypes::_TRUE},
+    {"let", TokenTypes::LET},       {"fn", TokenTypes::FUNCTION},
+    {"if", TokenTypes::IF},         {"else", TokenTypes::ELSE},
+    {"return", TokenTypes::RETURN}, {"true", TokenTypes::_TRUE},
     {"false", TokenTypes::_FALSE},
 };
 
@@ -46,9 +43,16 @@ Token Lexer::NextToken() {
 
   auto c = *_it;
   switch (c) {
-  case '=':
-    ++_it;
-    return TokenTypes::ASSIGN;
+  case '=': {
+    if (Peek() == '=') {
+      ++_it;
+      ++_it;
+      return TokenTypes::EQ;
+    } else {
+      ++_it;
+      return TokenTypes::ASSIGN;
+    }
+  }
   case ';':
     ++_it;
     return TokenTypes::SEMICOLON;
@@ -67,9 +71,16 @@ Token Lexer::NextToken() {
   case '-':
     ++_it;
     return {TokenTypes::MINUS};
-  case '!':
-    ++_it;
-    return {TokenTypes::BANG};
+  case '!': {
+    if (Peek() == '=') {
+      ++_it;
+      ++_it;
+      return TokenTypes::NEQ;
+    } else {
+      ++_it;
+      return {TokenTypes::BANG};
+    }
+  }
   case '*':
     ++_it;
     return {TokenTypes::ASTERISK};
@@ -140,6 +151,18 @@ Token Lexer::ReadInt() {
     }
   }
   return Token::Int({begin, _it});
+}
+
+char Lexer::Peek() const {
+  auto it = _it;
+  if (it == _input.end()) {
+    return 0;
+  }
+  ++it;
+  if (it == _input.end()) {
+    return 0;
+  }
+  return *it;
 }
 
 } // namespace monkey
