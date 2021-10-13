@@ -1,6 +1,6 @@
 #pragma once
-#include <ostream>
 #include <magic_enum.hpp>
+#include <ostream>
 
 namespace monkey {
 
@@ -9,27 +9,29 @@ enum class TokenTypes {
   _EOF,
   IDENT,
   INT,
-  ASSIGN, // =
-  PLUS, // +
-  MINUS, // -
-  BANG, // !
-  ASTERISK, // *
-  SLASH, // /
-  COMMA, // ,
-  SEMICOLON, // ;  
-  LT, // <
-  GT, // >
-  LPAREN, // (
-  RPAREN, // )
-  LBRACE, // {
-  RBRACE, // }
-  FUNCTION, // fn
-  LET, // let
+  ASSIGN,    // =
+  PLUS,      // +
+  MINUS,     // -
+  BANG,      // !
+  ASTERISK,  // *
+  SLASH,     // /
+  COMMA,     // ,
+  SEMICOLON, // ;
+  LT,        // <
+  GT,        // >
+  LPAREN,    // (
+  RPAREN,    // )
+  LBRACE,    // {
+  RBRACE,    // }
+  FUNCTION,  // fn
+  LET,       // let
   _TRUE,
   _FALSE,
   IF,
   ELSE,
   RETURN,
+  EQ,  // ==
+  NEQ, // !=
 };
 
 inline std::ostream &operator<<(std::ostream &os, TokenTypes t) {

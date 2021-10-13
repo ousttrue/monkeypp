@@ -126,3 +126,25 @@ else{
   REQUIRE(monkey::Token{monkey::TokenTypes::RBRACE} == l.NextToken());
   REQUIRE(monkey::Token{monkey::TokenTypes::_EOF} == l.NextToken());
 }
+
+TEST_CASE("==", "[monkey::Lexer]") {
+
+  auto input = R"(
+    10 == 10;
+    10 != 9;
+)";
+
+  monkey::Lexer l(input);
+
+  REQUIRE(monkey::Token::Int("10") == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::EQ} == l.NextToken());
+  REQUIRE(monkey::Token::Int("10") == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::SEMICOLON} == l.NextToken());
+
+  REQUIRE(monkey::Token::Int("10") == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::NEQ} == l.NextToken());
+  REQUIRE(monkey::Token::Int("9") == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::SEMICOLON} == l.NextToken());
+
+  REQUIRE(monkey::Token{monkey::TokenTypes::_EOF} == l.NextToken());
+}
