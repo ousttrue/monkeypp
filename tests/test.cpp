@@ -93,3 +93,36 @@ TEST_CASE("other", "[monkey::Lexer]") {
   REQUIRE(monkey::Token{monkey::TokenTypes::SEMICOLON} == l.NextToken());
   REQUIRE(monkey::Token{monkey::TokenTypes::_EOF} == l.NextToken());
 }
+
+TEST_CASE("true,false", "[monkey::Lexer]") {
+
+  auto input = R"(
+if(5 < 10) {
+  return true;
+}
+else{
+  return false;
+}
+)";
+
+  monkey::Lexer l(input);
+
+  REQUIRE(monkey::Token{monkey::TokenTypes::IF} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::LPAREN} == l.NextToken());
+  REQUIRE(monkey::Token::Int("5") == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::LT} == l.NextToken());
+  REQUIRE(monkey::Token::Int("10") == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::RPAREN} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::LBRACE} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::RETURN} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::_TRUE} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::SEMICOLON} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::RBRACE} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::ELSE} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::LBRACE} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::RETURN} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::_FALSE} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::SEMICOLON} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::RBRACE} == l.NextToken());
+  REQUIRE(monkey::Token{monkey::TokenTypes::_EOF} == l.NextToken());
+}

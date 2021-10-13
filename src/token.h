@@ -25,6 +25,11 @@ enum class TokenTypes {
   RBRACE, // }
   FUNCTION, // fn
   LET, // let
+  _TRUE,
+  _FALSE,
+  IF,
+  ELSE,
+  RETURN,
 };
 
 inline std::ostream &operator<<(std::ostream &os, TokenTypes t) {
