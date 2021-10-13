@@ -36,35 +36,38 @@ Token Lexer::NextToken() {
   SkipWhiteSpace();
 
   if (_it == _input.end()) {
-    return Eof;
+    return {TokenTypes::_EOF};
   }
 
   auto c = *_it;
   switch (c) {
   case '=':
     ++_it;
-    return Assign;
+    return {TokenTypes::ASSIGN};
   case ';':
     ++_it;
-    return Semicolon;
+    return {TokenTypes::SEMICOLON};
   case '(':
     ++_it;
-    return LParen;
+    return {TokenTypes::LPAREN};
   case ')':
     ++_it;
-    return RParen;
+    return {TokenTypes::RPAREN};
   case ',':
     ++_it;
-    return Comma;
+    return {TokenTypes::COMMA};
   case '+':
     ++_it;
-    return Plus;
+    return {TokenTypes::PLUS};
+  case '-':
+    ++_it;
+    return {TokenTypes::MINUS};
   case '{':
     ++_it;
-    return LBrace;
+    return {TokenTypes::LBRACE};
   case '}':
     ++_it;
-    return RBrace;
+    return {TokenTypes::RBRACE};
 
   default: {
     if (isLetter(c)) {
@@ -78,7 +81,7 @@ Token Lexer::NextToken() {
       auto t = ReadInt();
       return t;
     } else {
-      return Illegal;
+      return {TokenTypes::ILLEGAL};
     }
   }
   }

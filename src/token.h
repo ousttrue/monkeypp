@@ -9,16 +9,22 @@ enum class TokenTypes {
   _EOF,
   IDENT,
   INT,
-  ASSIGN,
-  PLUS,
-  COMMA,
-  SEMICOLON,
-  LPAREN,
-  RPAREN,
-  LBRACE,
-  RBRACE,
-  FUNCTION,
-  LET,
+  ASSIGN, // =
+  PLUS, // +
+  MINUS, // -
+  BANG, // !
+  ASTERISK, // *
+  SLASH, // /
+  COMMA, // ,
+  SEMICOLON, // ;  
+  LT, // <
+  GT, // >
+  LPAREN, // (
+  RPAREN, // )
+  LBRACE, // {
+  RBRACE, // }
+  FUNCTION, // fn
+  LET, // let
 };
 
 inline std::ostream &operator<<(std::ostream &os, TokenTypes t) {

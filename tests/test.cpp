@@ -8,14 +8,14 @@ TEST_CASE("basic", "[monkey::Lexer]") {
 
   monkey::Lexer l(input);
 
-  REQUIRE(monkey::Assign == l.NextToken());
-  REQUIRE(monkey::Plus == l.NextToken());
-  REQUIRE(monkey::LParen == l.NextToken());
-  REQUIRE(monkey::RParen == l.NextToken());
-  REQUIRE(monkey::LBrace == l.NextToken());
-  REQUIRE(monkey::RBrace == l.NextToken());
-  REQUIRE(monkey::Comma == l.NextToken());
-  REQUIRE(monkey::Semicolon == l.NextToken());
+  REQUIRE(monkey::TokenTypes::ASSIGN == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::PLUS == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::LPAREN == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::RPAREN == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::LBRACE == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::RBRACE == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::COMMA == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::SEMICOLON == l.NextToken().type);
 }
 
 TEST_CASE("source", "[monkey::Lexer]") {
@@ -32,43 +32,43 @@ let result = add(five, ten);
 
   monkey::Lexer l(input);
 
-  REQUIRE(monkey::Let == l.NextToken());
+  REQUIRE(monkey::TokenTypes::LET == l.NextToken().type);
   REQUIRE(monkey::Ident("five") == l.NextToken());
-  REQUIRE(monkey::Assign == l.NextToken());
+  REQUIRE(monkey::TokenTypes::ASSIGN == l.NextToken().type);
   REQUIRE(monkey::Int("5") == l.NextToken());
-  REQUIRE(monkey::Semicolon == l.NextToken());
-  REQUIRE(monkey::Let == l.NextToken());
+  REQUIRE(monkey::TokenTypes::SEMICOLON == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::LET == l.NextToken().type);
   REQUIRE(monkey::Ident("ten") == l.NextToken());
-  REQUIRE(monkey::Assign == l.NextToken());
+  REQUIRE(monkey::TokenTypes::ASSIGN == l.NextToken().type);
   REQUIRE(monkey::Int("10") == l.NextToken());
-  REQUIRE(monkey::Semicolon == l.NextToken());
-  REQUIRE(monkey::Let == l.NextToken());
+  REQUIRE(monkey::TokenTypes::SEMICOLON == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::LET == l.NextToken().type);
   REQUIRE(monkey::Ident("add") == l.NextToken());
-  REQUIRE(monkey::Assign == l.NextToken());
-  REQUIRE(monkey::Function == l.NextToken());
-  REQUIRE(monkey::LParen == l.NextToken());
+  REQUIRE(monkey::TokenTypes::ASSIGN == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::FUNCTION == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::LPAREN == l.NextToken().type);
   REQUIRE(monkey::Ident("x") == l.NextToken());
-  REQUIRE(monkey::Comma == l.NextToken());
+  REQUIRE(monkey::TokenTypes::COMMA == l.NextToken().type);
   REQUIRE(monkey::Ident("y") == l.NextToken());
-  REQUIRE(monkey::RParen == l.NextToken());
-  REQUIRE(monkey::LBrace == l.NextToken());
+  REQUIRE(monkey::TokenTypes::RPAREN == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::LBRACE == l.NextToken().type);
   REQUIRE(monkey::Ident("x") == l.NextToken());
-  REQUIRE(monkey::Plus == l.NextToken());
+  REQUIRE(monkey::TokenTypes::PLUS == l.NextToken().type);
   REQUIRE(monkey::Ident("y") == l.NextToken());
-  REQUIRE(monkey::Semicolon == l.NextToken());
-  REQUIRE(monkey::RBrace == l.NextToken());
-  REQUIRE(monkey::Semicolon == l.NextToken());
-  REQUIRE(monkey::Let == l.NextToken());
+  REQUIRE(monkey::TokenTypes::SEMICOLON == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::RBRACE == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::SEMICOLON == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::LET == l.NextToken().type);
   REQUIRE(monkey::Ident("result") == l.NextToken());
-  REQUIRE(monkey::Assign == l.NextToken());
+  REQUIRE(monkey::TokenTypes::ASSIGN == l.NextToken().type);
   REQUIRE(monkey::Ident("add") == l.NextToken());
-  REQUIRE(monkey::LParen == l.NextToken());
+  REQUIRE(monkey::TokenTypes::LPAREN == l.NextToken().type);
   REQUIRE(monkey::Ident("five") == l.NextToken());
-  REQUIRE(monkey::Comma == l.NextToken());
+  REQUIRE(monkey::TokenTypes::COMMA == l.NextToken().type);
   REQUIRE(monkey::Ident("ten") == l.NextToken());
-  REQUIRE(monkey::RParen == l.NextToken());
-  REQUIRE(monkey::Semicolon == l.NextToken());
-  REQUIRE(monkey::Eof == l.NextToken());
+  REQUIRE(monkey::TokenTypes::RPAREN == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::SEMICOLON == l.NextToken().type);
+  REQUIRE(monkey::TokenTypes::_EOF == l.NextToken().type);
 }
 
 TEST_CASE("other", "[monkey::Lexer]") {
@@ -79,5 +79,5 @@ TEST_CASE("other", "[monkey::Lexer]") {
 
   monkey::Lexer l(input);
 
-  REQUIRE(monkey::Eof == l.NextToken());
+  REQUIRE(monkey::TokenTypes::_EOF == l.NextToken().type);
 }
