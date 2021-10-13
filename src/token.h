@@ -1,5 +1,6 @@
 #pragma once
 #include <ostream>
+#include <magic_enum.hpp>
 
 namespace monkey {
 
@@ -21,7 +22,7 @@ enum class TokenTypes {
 };
 
 inline std::ostream &operator<<(std::ostream &os, TokenTypes t) {
-  os << (int)t;
+  os << magic_enum::enum_name(t);
   return os;
 }
 

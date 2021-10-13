@@ -1,1 +1,1 @@
-subdirs(catch2)
+subdirs(catch2 magic_enum)
