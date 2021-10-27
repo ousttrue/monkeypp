@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include <catch.hpp>
 #include <lexer.h>
+#include <parser.h>
 
 TEST_CASE("basic", "[monkey::Lexer]") {
 
@@ -147,4 +148,22 @@ TEST_CASE("==", "[monkey::Lexer]") {
   REQUIRE(monkey::Token{monkey::TokenTypes::SEMICOLON} == l.NextToken());
 
   REQUIRE(monkey::Token{monkey::TokenTypes::_EOF} == l.NextToken());
+}
+
+TEST_CASE("let statement", "[monkey::Parser]") {
+
+  auto input = R"(
+    let x = 5;
+    let y = 10;
+    let foobar = 838383;
+)";
+
+  monkey::Lexer l(input);
+  monkey::Parser p(l);
+
+  auto program = p.Parse();
+  REQUIRE(program);
+  REQUIRE(program->Statements.size() == 3);
+
+  // REQUIRE(*program->Statements[0]==LetSt)
 }
