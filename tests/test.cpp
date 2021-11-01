@@ -150,6 +150,13 @@ TEST_CASE("==", "[monkey::Lexer]") {
   REQUIRE(monkey::Token{monkey::TokenTypes::_EOF} == l.NextToken());
 }
 
+void testLetStatement(monkey::IStatement *s, std::string_view name) {
+  REQUIRE(s->TokenLiteral() == "let");
+  auto let = dynamic_cast<monkey::LetStatement *>(s);
+  REQUIRE(let);
+  REQUIRE(let->Name.value == name);
+}
+
 TEST_CASE("let statement", "[monkey::Parser]") {
 
   auto input = R"(
@@ -161,9 +168,11 @@ TEST_CASE("let statement", "[monkey::Parser]") {
   monkey::Lexer l(input);
   monkey::Parser p(l);
 
-  auto program = p.Parse();
+  auto program = p.parseProgram();
   REQUIRE(program);
   REQUIRE(program->Statements.size() == 3);
 
-  // REQUIRE(*program->Statements[0]==LetSt)
+  testLetStatement(program->Statements[0].get(), "x");
+  testLetStatement(program->Statements[1].get(), "y");
+  testLetStatement(program->Statements[2].get(), "foobar");
 }

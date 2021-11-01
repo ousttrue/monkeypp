@@ -27,15 +27,16 @@ struct Identifier : IExpression {
 /// IStatement
 ///
 struct IStatement : public INode {
-  virtual void statementNode() = 0;
+  virtual void StatementNode() = 0;
 };
 
 struct LetStatement : public IStatement {
-  Token Token;
+  Token Let;
+  Token Name;
   std::shared_ptr<IExpression> Value;
-
-  void statementNode() override {}
-  std::string_view TokenLiteral() const override { return Token.value; }
+  LetStatement(const Token &let) : Let(let) {}
+  void StatementNode() override {}
+  std::string_view TokenLiteral() const override { return Let.value; }
 };
 
 struct Program {
